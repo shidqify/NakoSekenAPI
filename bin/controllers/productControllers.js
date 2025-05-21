@@ -99,9 +99,9 @@ module.exports.updateProduct = (req, res) => {
 }
 
 module.exports.deleteProduct = (req, res) => {
-  const { name } = req.params;
+  const { id } = req.params;
 
-  productModules.deleteProduct(name)
+  productModules.deleteProduct(id)
     .then(resp => {
       logger.info('Product has been deleted');
       wrapper.response(res, 'success', wrapper.data(resp), 'Product has been deleted', 200);

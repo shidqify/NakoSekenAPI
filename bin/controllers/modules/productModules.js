@@ -73,3 +73,22 @@ module.exports.updateProduct = async (name, updatedData) => {
     throw new InternalServerError(error.message);
   }
 }
+
+module.exports.deleteProduct = async (id) => {
+  try {
+    const data = await Product.findOne({
+      where: {
+        product_id: id
+      }
+    })
+
+    if (!data) {
+      throw new NotFoundError("Product Not Found");
+    }
+    const result = await data.destroy();
+    
+    return result;
+  } catch (error) {
+    throw new InternalServerError(error.message);
+  }
+}

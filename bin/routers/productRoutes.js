@@ -18,7 +18,7 @@ router.put('/product/:name',
   validateProduct,
   productController.updateProduct
 );
-router.delete('/product/:name',
+router.delete('/product/:id',
   productController.deleteProduct
 );
 
