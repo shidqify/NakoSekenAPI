@@ -2,8 +2,8 @@ module.exports = {
     STATUS : {
         KONFIRMASI_PEMBAYARAN : "Mohon Konfirmasi Pembayaran",
         PEMBAYARAN_DIKONFIRMASI : "Pembayaran Sudah di Konfirmasi",
-        PEMBATALAN : "Pesanan Dibatalkan",
-        SELESAI : "Proses Selesai",
+        DIBATALKAN : "Pesanan Dibatalkan",
+        SELESAI : "Pesanan Selesai",
         DIAMBIL : "Pesanan Sudah Bisa di Ambil",
     },
     ACTIVESTEP : {
