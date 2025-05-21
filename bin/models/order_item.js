@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    menu_id: {
+    product_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

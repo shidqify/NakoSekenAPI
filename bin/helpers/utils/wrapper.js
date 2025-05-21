@@ -31,7 +31,7 @@ const checkErrorCode = (errorObj) => {
     }
 };
 
-const response = (res, type, result, message = '', statusCode = 200, code = statusCode) => {
+const response = (res, type, result, message = '', statusCode = 200) => {
     let ok = true;
     let {data: d} = result;
     if (type === 'fail') {
@@ -40,14 +40,11 @@ const response = (res, type, result, message = '', statusCode = 200, code = stat
         message = result.err.message || message;
         statusCode = checkErrorCode(result.err);
     }
-    if (statusCode !== 200) {
-        code = statusCode;
-    }
     const json = {
         ok,
         data: d,
         message,
-        code: code,
+        code: statusCode,
     };
     res.outputResponse = json;
     res.status(statusCode).send(json);

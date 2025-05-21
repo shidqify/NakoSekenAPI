@@ -5,5 +5,5 @@ module.exports.isMonthsValid = async (months) => {
     if (moment(months, 'MMMM', true).isValid()) {
         return true;
     }
-    throw new InternalServerError('Invalid months format');
+    throw InternalServerError('Invalid months format');
 }

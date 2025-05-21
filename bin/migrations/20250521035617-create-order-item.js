@@ -17,12 +17,12 @@ module.exports = {
           key: 'order_id'
         },
       },
-      menu_id: {
+      product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Menus',  // table name, case sensitive (usually plural)
-          key: 'menu_id'
+          model: 'Products',  // table name, case sensitive (usually plural)
+          key: 'product_id'
         },
       },
       name: {

@@ -2,7 +2,7 @@ const cors = require('cors');
 const wrapper = require('../helpers/utils/wrapper');
 const bodyParser = require('body-parser');
 const express = require('express');
-// const authRoutes = require('../routers/authRoutes');
+const productRoutes = require('../routers/productRoutes');
 const morganStream = require("../helpers/utils/morganStream");
 const morgan = require("morgan");
 
@@ -11,7 +11,7 @@ class AppServer {
     this.server = express();
 
     this.server.use(bodyParser.json());
-    this.server.use(bodyParser.urlencoded({ extended: false }));
+    this.server.use(bodyParser.urlencoded({ extended: true }));
 
     this.server.use(cors());
 
@@ -22,7 +22,8 @@ class AppServer {
     });
 
     //Routing
-    // this.server.use('/auth', authRoutes);
+    this.server.use('/api', productRoutes);
+
     // exception handling
     this.server.use((error, req, res, next) => {
       res.status(error.status || 500).json({
