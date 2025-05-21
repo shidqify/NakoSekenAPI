@@ -1,6 +1,7 @@
 const { InternalServerError, NotFoundError, BadRequestError } = require("../../helpers/error");
 const { Product } = require("../../models");
-const logger = require('../../helpers/utils/logger')
+const logger = require('../../helpers/utils/logger');
+const { where } = require("sequelize");
 
 module.exports.createProduct = async (productData) => {
   try {
@@ -41,7 +42,7 @@ module.exports.detailProduct = async (name) => {
   }
 }
 
-module.exports.allProduct = async (req, res) => {
+module.exports.allProduct = async () => {
   try {
     const data = await Product.findAll();
 
@@ -50,6 +51,24 @@ module.exports.allProduct = async (req, res) => {
     }
 
     return data;
+  } catch (error) {
+    throw new InternalServerError(error.message);
+  }
+}
+
+module.exports.updateProduct = async (name, updatedData) => {
+  try {
+    const rawData = await this.detailProduct(name);
+
+    const data = rawData.find(item => item.avail_size === updatedData.avail_size);
+
+    if (!data) {
+      throw new NotFoundError("Product Not Found");
+    }
+
+    const result = await data.update(updatedData);
+
+    return result;
   } catch (error) {
     throw new InternalServerError(error.message);
   }
