@@ -26,8 +26,22 @@ module.exports.createProduct = (req, res) => {
 module.exports.getAllProduct = (req, res) => {
   productModules.allProduct()
     .then(resp => {
+      const productMap = new Map();
+      resp.forEach(item => {
+        if (!productMap.has(item.name)) {
+          productMap.set(item.name, {
+            product_id: item.product_id,
+            name: item.name,
+            stock: item.stock > 0,
+            description: item.description,
+            image_url: item.image_url,
+            category: item.category
+          });
+        }
+      });
+      const result = Array.from(productMap.values());
       logger.info('All Product has been fetched');
-      wrapper.response(res, 'success', wrapper.data(resp), 'All Product has been fetched', 200);
+      wrapper.response(res, 'success', wrapper.data(result), 'All Product has been fetched', 200);
     })
     .catch(err => {
       logger.error('Error while fetching product', err);

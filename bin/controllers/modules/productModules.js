@@ -40,3 +40,17 @@ module.exports.detailProduct = async (name) => {
     throw new InternalServerError(error.message);
   }
 }
+
+module.exports.allProduct = async (req, res) => {
+  try {
+    const data = await Product.findAll();
+
+    if (!data) {
+      throw new NotFoundError("Data not found");
+    }
+
+    return data;
+  } catch (error) {
+    throw new InternalServerError(error.message);
+  }
+}
