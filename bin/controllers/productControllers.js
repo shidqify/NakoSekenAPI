@@ -51,7 +51,7 @@ module.exports.getAllProduct = (req, res) => {
 
 module.exports.getDetailProduct = (req, res) => {
   const { name } = req.params;
-  productModules.detailProduct(name)
+  productModules.detailProduct({ name })
     .then(resp => {
       const result = {
         name: resp[0].name,

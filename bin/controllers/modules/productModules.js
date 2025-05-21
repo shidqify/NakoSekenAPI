@@ -5,16 +5,15 @@ const { where } = require("sequelize");
 
 module.exports.createProduct = async (productData) => {
   try {
-    const existData = await this.detailProduct(productData.name);
-    const isDuplicate = existData.some(item =>
-      item.name === productData.name &&
-      item.avail_size === productData.avail_size
-    );
-    
-    if (isDuplicate) {
+    const existData = await this.detailProduct({
+      name: productData.name,
+      avail_size: productData.avail_size
+    });
+
+    if (existData) {
       throw new BadRequestError("Product already exist");
     };
-    
+
     const result = await Product.create(productData);
 
     return result;
@@ -24,12 +23,10 @@ module.exports.createProduct = async (productData) => {
   }
 }
 
-module.exports.detailProduct = async (name) => {
+module.exports.detailProduct = async (attr) => {
   try {
     const data = await Product.findAll({
-      where: {
-        name
-      }
+      where: attr
     });
 
     if (!data) {
@@ -58,7 +55,7 @@ module.exports.allProduct = async () => {
 
 module.exports.updateProduct = async (name, updatedData) => {
   try {
-    const rawData = await this.detailProduct(name);
+    const rawData = await this.detailProduct({ name });
 
     const data = rawData.find(item => item.avail_size === updatedData.avail_size);
 
@@ -86,7 +83,7 @@ module.exports.deleteProduct = async (id) => {
       throw new NotFoundError("Product Not Found");
     }
     const result = await data.destroy();
-    
+
     return result;
   } catch (error) {
     throw new InternalServerError(error.message);
