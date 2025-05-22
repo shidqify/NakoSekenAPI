@@ -3,6 +3,7 @@ const wrapper = require('../helpers/utils/wrapper');
 const bodyParser = require('body-parser');
 const express = require('express');
 const productRoutes = require('../routers/productRoutes');
+const orderRoutes = require('../routers/orderRoutes');
 const morganStream = require("../helpers/utils/morganStream");
 const morgan = require("morgan");
 
@@ -22,7 +23,8 @@ class AppServer {
     });
 
     //Routing
-    this.server.use('/api', productRoutes);
+    this.server.use('/api/product', productRoutes);
+    this.server.use('/api/order', orderRoutes);
 
     // exception handling
     this.server.use((error, req, res, next) => {

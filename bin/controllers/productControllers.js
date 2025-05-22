@@ -32,6 +32,7 @@ module.exports.getAllProduct = (req, res) => {
           productMap.set(item.name, {
             product_id: item.product_id,
             name: item.name,
+            price: item.price,
             stock: item.stock > 0,
             description: item.description,
             image_url: item.image_url,

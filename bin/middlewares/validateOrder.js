@@ -6,9 +6,9 @@ const validateOrder = [
   body('items').isArray({ min: 1 }).withMessage('Items must be a non-empty array'),
   body('items.*.name').isString().notEmpty().withMessage('Each item must have a name (string)'),
   body('items.*.size').isString().notEmpty().withMessage('Each item must have a size (string)'),
-  body('items.*.qty').isInt({ min: 1 }).withMessage('Each item must have a quantity (integer >= 1)'),
-  body('total').isDecimal().notEmpty().withMessage('Total is required and must be a decimal'),
+  body('items.*.quantity').isInt({ min: 1 }).withMessage('Each item must have a quantity (integer >= 1)'),
   body('notes').optional().isString().withMessage('Notes must be a string'),
+  body('payment_method').isString().withMessage('payment_method must be a string'),
 
   (req, res, next) => {
     const errors = validationResult(req);

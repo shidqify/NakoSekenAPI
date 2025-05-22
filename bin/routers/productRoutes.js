@@ -4,21 +4,21 @@ const productController = require('../controllers/productControllers.js');
 const validateProduct = require('../middlewares/validateProduct.js');
 
 router.post(
-  '/product',
+  '/',
   validateProduct,
   productController.createProduct
 );
-router.get('/product',
+router.get('/',
   productController.getAllProduct
 );
-router.get('/product/:name',
+router.get('/:name',
   productController.getDetailProduct
 );
-router.put('/product/:name',
+router.put('/:name',
   validateProduct,
   productController.updateProduct
 );
-router.delete('/product/:id',
+router.delete('/:id',
   productController.deleteProduct
 );
 
