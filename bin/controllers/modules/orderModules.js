@@ -2,11 +2,14 @@ const { InternalServerError, NotFoundError, BadRequestError } = require("../../h
 const { Order, Order_Item, sequelize, Product } = require("../../models");
 const logger = require('../../helpers/utils/logger');
 const { detailProduct } = require("./productModules");
-const crypto = require('crypto');
 
-const generatePaymentCode = (orderData) => {
-  const str = JSON.stringify(orderData);
-  return crypto.createHash('sha256').update(str).digest('hex').toUpperCase().slice(0, 6);
+const generatePaymentCode = () => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
 }
 
 module.exports.createOrder = async (orderData) => {
@@ -33,7 +36,7 @@ module.exports.createOrder = async (orderData) => {
       };
     }));
 
-    const payment_code = generatePaymentCode(listOrder);
+    const payment_code = generatePaymentCode();
     const subtotal = listOrder.reduce((sum, item) => sum + item.total_price, 0);
     const tax = subtotal * 11 / 12 * 12 / 100;
     const receiptData = {
