@@ -76,4 +76,33 @@ module.exports.createOrder = async (orderData) => {
     await t.rollback()
     throw new InternalServerError(error.message);
   }
+};
+
+module.exports.getOrder = async (payment_code) => {
+  try {
+    const order = await Order.findOne({
+      where: { payment_code },
+      include: [
+        {
+          model: Order_Item,
+          include: [
+            {
+              model: Product,
+              attributes: ['category']
+            }
+          ],
+          attributes: ['product_id', 'name', 'size', 'quantity', 'total_price']
+        }
+      ],
+      attributes: ['order_id', 'payment_code', 'status', 'total', 'notes', 'expired_at']
+    });
+
+    if (!order) {
+      throw new NotFoundError("Order not found");
+    }
+
+    return order;
+  } catch (error) {
+    throw new InternalServerError(error.message);
+  }
 }

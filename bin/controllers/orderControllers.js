@@ -44,3 +44,33 @@ module.exports.createOrder = (req, res) => {
       wrapper.response(res, 'fail', wrapper.error(err), `Error while creating order. Error: ${err}`, 400);
     });
 }
+
+module.exports.getOrder = (req, res) => {
+  const payment_code = req.query.payment_code;
+
+  orderModules.getOrder(payment_code)
+    .then(resp => {
+      const result = {
+        order_id: resp.order_id,
+        payment_code: resp.payment_code,
+        status: resp.status,
+        items: resp.Order_Items.map(item => ({
+          product_id: item.product_id,
+          name: item.name,
+          size: item.size,
+          category: item.Product.category,
+          quantity: item.quantity,
+          total_price: item.total_price
+        })),
+        total: resp.total,
+        notes: resp.notes,
+        expired_at: resp.expired_at
+      }
+      logger.info('Order has been created');
+      wrapper.response(res, 'success', wrapper.data(result), 'Order has been created', 201);
+    })
+    .catch(err => {
+      logger.error('Error while creating order', err);
+      wrapper.response(res, 'fail', wrapper.error(err), `Error while creating order. Error: ${err}`, 400);
+    });
+}

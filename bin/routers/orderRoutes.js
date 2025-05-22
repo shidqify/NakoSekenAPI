@@ -8,10 +8,10 @@ router.post(
   validateOrder,
   orderController.createOrder
 );
-// router.get(
-//   '/',
-//   orderController.getOrder
-// );
+router.get(
+  '/',
+  orderController.getOrder
+);
 // router.put(
 //   '/',
 //   validateOrder,
